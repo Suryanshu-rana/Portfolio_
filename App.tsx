@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import About from './components/About';
-import Skills from './components/Skills'; 
-import Experience from './components/Experience';
-import Projects from './components/Projects';
-import Contact from './components/Contact';
-import ChatWidget from './components/ChatWidget';
+const About = lazy(() => import('./components/About'));
+const Skills = lazy(() => import('./components/Skills'));
+const Experience = lazy(() => import('./components/Experience'));
+const Projects = lazy(() => import('./components/Projects'));
+const Contact = lazy(() => import('./components/Contact'));
+ 
 
 const Footer: React.FC = () => (
   <footer className="bg-black py-8 border-t border-white/10">
@@ -49,14 +49,15 @@ const App: React.FC = () => {
       <Navbar />
       <main>
         <Hero />
-        <About />
-        <Skills />
-        <Experience />
-        <Projects />
-        <Contact />
+        <Suspense fallback={<div />}> 
+          <About />
+          <Skills />
+          <Experience />
+          <Projects />
+          <Contact />
+        </Suspense>
       </main>
       <Footer />
-      <ChatWidget />
     </div>
   );
 };
